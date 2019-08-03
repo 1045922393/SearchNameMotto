@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <li>111</li>
+    <li>111</li>
+    <li>111</li>
+    <li>111</li>
+    <li>111</li>
+
+</body>
+<script>
+    let lis = document.getElementsByTagName('li')
+    console.log(lis)
+    let falseArr = {
+        0: '119',
+        1: '114',
+        2: '115',
+        3: '1123',
+        4: '112',
+        5: '111',
+        length: 6
+    }
+    console.log(falseArr)
+    // Array.prototype.forEach.apply(falseArr, (e, i) => {
+    //     console.log(e)
+    // })
+
+    Array.prototype.forEach.call(falseArr, (e, i) => {
+        console.log(e)
+    })
+        // falseArr.forEach((e) => {
+        //     console.log(e)
+        // })
+</script>
+
+</html>
