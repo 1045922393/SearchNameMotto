@@ -60,12 +60,10 @@ var person = [
         sex: 'girls'
     }
 ]
-
 let user = document.querySelector('.user');
-
+let inp = document.querySelector('.inp');
 //加载渲染所有数据
 let html = ''
-
 person.forEach((element, index) => {
     html += template(element.src, element.name, element.motto);
 });
@@ -86,7 +84,6 @@ btns.addEventListener('click', function (event) {   //利用事件委托
     //     click.children[key].classList.remove('active');
     // }
     // console.log(event)
-
     if (event.target.nodeName === 'LI') {
         let click = this;
         Array.prototype.forEach.call(click.children, function (item) {
@@ -97,56 +94,58 @@ btns.addEventListener('click', function (event) {   //利用事件委托
         target.classList.add('active');
         let chooseSex = target.getAttribute('sex');
         // console.log(chooseSex)
-
+        let searchContent = inp.value;
         let html = ''   //渲染筛选的条件
         if (chooseSex == 'all') {
             person.forEach((element, index) => {
-                html += template(element.src, element.name, element.motto);
-
+                if (!inp.value) {
+                    html += template(element.src, element.name, element.motto);
+                } else {
+                    if (element.name.indexOf(searchContent) != -1 || element.motto.indexOf(searchContent) != -1) {
+                        html += template(element.src, element.name, element.motto);
+                    }
+                }
             });
             user.innerHTML = html;
         } else {
             person.forEach((element, index) => {
                 if (element.sex == chooseSex) {
-                    html += template(element.src, element.name, element.motto);
-
+                    if (element.name.indexOf(searchContent) != -1 || element.motto.indexOf(searchContent) != -1) {
+                        html += template(element.src, element.name, element.motto);
+                    }
                 }
             });
             user.innerHTML = html;
         }
     }
-})
-
-let inp = document.querySelector('.inp');
-
-inp.addEventListener('change', function (e) {
-    let getThis = this;
-    let html = '';
-    let searchContent = getThis.value;
-    if (searchContent.trim()) {
-        person.forEach((element, index) => {
-            if (element.name.indexOf(searchContent) != -1 || element.motto.indexOf(searchContent) != -1) {
-                html += template(element.src, element.name, element.motto);
-            }
-        });
-    } else {
-        // person.forEach((element, index) => {
-        //     html += `<li>
-        //     <div class="head-img">
-        //     <img src='${element.src}' alt="">
-        //     </div>
-        //     <div class="tit">
-        //     <h1 class="name">'${element.name}'</h1>
-        //     <p class="motto">'${element.motto} '</p>
-        //     </div>
-        //     </li>`
-        person.forEach((element, index) => {
-            html += template(element.src, element.name, element.motto);
-        });
-    }
-    user.innerHTML = html;
-})
-
+});
+// inp.addEventListener('change', function (e) {
+//     let getThis = this;
+//     let html = '';
+//     let searchContent = getThis.value;
+//     if (searchContent.trim()) {
+//         person.forEach((element, index) => {
+//             if (element.name.indexOf(searchContent) != -1 || element.motto.indexOf(searchContent) != -1) {
+//                 html += template(element.src, element.name, element.motto);
+//             }
+//         });
+//     } else {
+//         // person.forEach((element, index) => {
+//         //     html += `<li>
+//         //     <div class="head-img">
+//         //     <img src='${element.src}' alt="">
+//         //     </div>
+//         //     <div class="tit">
+//         //     <h1 class="name">'${element.name}'</h1>
+//         //     <p class="motto">'${element.motto} '</p>
+//         //     </div>
+//         //     </li>`
+//         person.forEach((element, index) => {
+//             html += template(element.src, element.name, element.motto);
+//         });
+//     }
+//     user.innerHTML = html;
+// })
 function template(src, name, motto) {       //模板
     return `<li>
     <div class="head-img">
@@ -158,15 +157,6 @@ function template(src, name, motto) {       //模板
     </div>
     </li>`
 }
-
-
-
-
-
-
-
-
-
 
 // var inp = document.getElementsByClassName('inp')[0],
 //     btnList = document.getElementsByClassName('btn-list')[0],
